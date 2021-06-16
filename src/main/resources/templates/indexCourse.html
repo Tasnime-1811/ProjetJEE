@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Course Management System</title>
+
+    <link rel="stylesheet"
+
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+
+</head>
+<body >
+<div id="wrapper">
+    <div th:replace="/menu"></div>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            <div th:replace="/toolbar"></div>
+
+            <div class="container-fluid">
+<div class="container my-2">
+    <h1 align="center">Course List</h1>
+    <hr>
+
+    <table border="1" class = "table table-striped table-responsive-md">
+        <thead>
+        <tr>
+            <th>
+                <a th:href="@{'/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir}}">
+                    Course Name</a>
+            </th>
+            <th>
+                <a th:href="@{'/page/' + ${currentPage} + '?sortField=capacity&sortDir=' + ${reverseSortDir}}">
+                    Course Capacity</a>
+            </th>
+            <th>
+                <a th:href="@{'/page/' + ${currentPage} + '?sortField=nbHours&sortDir=' + ${reverseSortDir}}">
+                    Number of hours per Week</a>
+            </th>
+            <th>
+                <a th:href="@{'/page/' + ${currentPage} + '?sortField=tariff&sortDir=' + ${reverseSortDir}}">
+                    Price Per Month </a>
+            </th>
+            <th> Actions </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="course : ${listCourse}">
+            <td th:text="${course.name}"></td>
+            <td th:text="${course.capacity}"></td>
+            <td th:text="${course.nbHours}"></td>
+            <td th:text="${course.tariff}"></td>
+            <td> <a th:href="@{/CourseManagment/UpdateCourse/{id_course}(id_course=${course.id_course})}" class="btn btn-primary" ><img src="https://www.freeiconspng.com/thumbs/edit-icon-png/edit-new-icon-22.png" width="20px" height="20px"></a>
+                <a th:href="@{/deleteCourse/{id_course}(id_course=${course.id_course})}" class="btn btn-danger"><img src="https://icons-for-free.com/iconfiles/png/512/delete+remove+trash+trash+bin+trash+can+icon-1320073117929397588.png" width="20px" height="20px"></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a th:href = "@{/CourseManagment/NewCourseForm}" class="btn btn-primary btn-sm mb-3" align="center"> Add Course </a>
+    <div th:if = "${totalPages > 1}">
+        <div class = "row col-sm-10">
+            <div class = "col-sm-2">
+                Total Rows: [[${totalItems}]]
+            </div>
+            <div class = "col-sm-1">
+					<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+						<a th:if="${currentPage != i}" th:href="@{'/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+						<span th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
+					</span>
+            </div>
+            <div class = "col-sm-1">
+                <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+                <span th:unless="${currentPage < totalPages}">Next</span>
+            </div>
+
+            <div class="col-sm-1">
+                <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
+                <span th:unless="${currentPage < totalPages}">Last</span>
+            </div>
+        </div>
+    </div>
+</div></div></div></div></div>
+</body>
+</html>

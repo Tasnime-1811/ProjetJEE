@@ -7,9 +7,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import javax.persistence.*;
+import java.io.Serializable;
+
+
 @Entity
 @Table(name="coach")
-public class coach {
+public class coach implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,10 +38,15 @@ public class coach {
     @Column(name = "adress")
     private String adress;
 
+
+    @ManyToOne
+    @JoinColumn(name = "id_course", insertable = true, updatable = true)
+    private course course;
+
     public coach() {
     }
 
-    public coach(long id_coach, String firstName, String lastName, String email, int tel, String gender, String adress) {
+    public coach(long id_coach, String firstName, String lastName, String email, int tel, String gender, String adress, course course) {
         this.id_coach = id_coach;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -45,6 +54,16 @@ public class coach {
         this.tel = tel;
         this.gender = gender;
         this.adress = adress;
+        this.course = course;
+    }
+
+
+    public course getCourse() {
+        return course;
+    }
+
+    public void setCourse(course course) {
+        this.course = course;
     }
 
     public long getId_coach() {

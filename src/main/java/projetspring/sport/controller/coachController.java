@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import projetspring.sport.model.coach;
 import projetspring.sport.service.coachService;
 
@@ -22,43 +21,35 @@ public class coachController {
     private coachService coachService;
 
     // display list of Coachs
-    @GetMapping("/")
+    @GetMapping("/CoachManagment")
     public String viewHomePage(Model model) {
         return findPaginated(1, "firstName", "asc", model);
     }
 
-    @GetMapping("/showNewCoachForm")
+    @GetMapping("/CoachManagment/NewCoachForm")
     public String showNewCoachForm(Model model) {
-        // create model attribute to bind form data
         coach coach = new coach();
         model.addAttribute("coach", coach);
         return "new_Coach";
     }
 
     @PostMapping("/saveCoach")
-    public String saveCoach(coach coach) {
-        // save coach to database
+    public String saveCoach(coach coach ,Model model) {
         coachService.saveCoach(coach);
-        return "redirect:/";
+        return findPaginated(1, "firstName", "asc", model);
     }
 
-    @GetMapping("/showFormForUpdate/{id}")
-    public String showFormForUpdate(@PathVariable ( value = "id") long id, Model model) {
-
-        // get coach from the service
+    @GetMapping("/CoachManagment/UpdateCoach/{id}")
+    public String showFormForUpdate(@PathVariable (value = "id") long id, Model model) {
         coach coach = coachService.getCoachById(id);
-
-        // set coach as a model attribute to pre-populate the form
         model.addAttribute("coach", coach);
         return "update_Coach";
     }
 
     @GetMapping("/deleteCoach/{id}")
-    public String deleteCoach(@PathVariable (value = "id") long id) {
-
-        // call delete coach method
+    public String deleteCoach(@PathVariable (value = "id") long id, Model model) {
         this.coachService.deleteCoachById(id);
-        return "redirect:/";
+        return findPaginated(1, "firstName", "asc", model);
     }
 
 
@@ -69,19 +60,18 @@ public class coachController {
                                 Model model) {
         int pageSize = 5;
 
-        Page<coach> page = coachService.findPaginated(pageNo, pageSize, sortField, sortDir);
+        Page <coach> page = coachService.findPaginated(pageNo, pageSize, sortField, sortDir);
         List<coach> listCoach = page.getContent();
 
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
-
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
 
         model.addAttribute("listCoach", listCoach);
-        return "index" +
+        return "indexCoach"+
                 "";
     }
 }

@@ -35,7 +35,7 @@ public class coachService implements coachServiceInterface {
         if (optional.isPresent()) {
             coach = optional.get();
         } else {
-            throw new RuntimeException("Coach not found for id :: " + id);
+            throw new RuntimeException("Coach not found for id : " + id);
         }
         return coach;
     }

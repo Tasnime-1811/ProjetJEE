@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Course Management System</title>
+
+    <link rel="stylesheet"  href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+</head>
+<body>
+<div id="wrapper">
+    <div th:replace="/menu"></div>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            <div th:replace="/toolbar"></div>
+
+            <div class="container-fluid">
+<div class="container">
+
+
+    <h2>Update Course</h2>
+<hr>
+    <form action="#" th:action="@{/saveCourse}" th:object="${course}"
+          method="POST">
+
+        <!-- Add hidden form field to handle update -->
+        <input type="hidden" th:field="*{id_course}" />
+
+        <input type="text" th:field="*{name}" class="form-control mb-4 col-4">
+
+        <input type="number" th:field="*{capacity}" class="form-control mb-4 col-4">
+
+        <input type="number" th:field="*{nbHours}" class="form-control mb-4 col-4">
+
+        <input type="number" th:field="*{tariff}" class="form-control mb-4 col-4">
+
+        <br>
+
+
+
+        <button type="submit" class="btn btn-info col-2"> Update Course</button>
+    </form>
+
+    <hr>
+
+    <a th:href = "@{/CourseManagment}"> Back to Course List</a>
+</div></div></div></div></div>
+</body>
+</html>

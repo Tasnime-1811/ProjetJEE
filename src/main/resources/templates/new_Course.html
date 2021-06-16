@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Course Management System</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+</head>
+<body>
+<div id="wrapper">
+    <div th:replace="/menu"></div>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            <div th:replace="/toolbar"></div>
+
+            <div class="container-fluid">
+<div class="container">
+    <h1>New Course</h1>
+    <hr>
+
+    <form action="#" th:action="@{/saveCourse}" th:object="${course}"
+          method="POST">
+        <input type="text" th:field="*{name}"
+               placeholder="Course Name" class="form-control mb-4 col-4">
+        <label>Capacity</label>
+        <input type="number" th:field="*{capacity}"
+               placeholder="Course Capacity" class="form-control mb-4 col-4">
+          <label>Number of hours a week </label>
+        <input type="number" th:field="*{nbHours}"
+               placeholder="Course number of hours" class="form-control mb-4 col-4">
+        <label>Price</label>
+        <input type="number" th:field="*{tariff}"
+               placeholder="Course Price" class="form-control mb-4 col-4">
+
+        <br>
+
+
+
+        <button type="submit" class="btn btn-info col-2"> Save Course</button>
+
+    </form>
+
+    <hr>
+
+    <a th:href = "@{/CourseManagment}"> Back to Course List</a>
+</div></div></div></div></div>
+</body>
+</html>
